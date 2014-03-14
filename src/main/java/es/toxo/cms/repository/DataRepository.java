@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import es.toxo.cms.exception.PageNotFoundException;
 import es.toxo.cms.model.Page;
 import es.toxo.cms.model.PageLink;
+import es.toxo.cms.model.SiteConfiguration;
 
 @Repository
 public class DataRepository {
@@ -41,12 +42,17 @@ public class DataRepository {
 	}
 
 	public void save(Page page) {
-		try {
-			Page oldPage = getPageByUuid(page.getUuid());
-			int index = pages.indexOf(oldPage);
-			pages.set(index, page);
-		} catch (Exception e) {
+		if(StringUtils.isEmpty(page.getUuid())){
+			page.setUuid(UUID.randomUUID().toString());
 			pages.add(page);
+		}else{
+			try {
+				Page oldPage = getPageByUuid(page.getUuid());
+				int index = pages.indexOf(oldPage);
+				pages.set(index, page);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 	}
 
@@ -71,9 +77,20 @@ public class DataRepository {
 	}
 
 	public Object createPage() {
-		Page page = new Page();
-		page.setUuid(UUID.randomUUID().toString());
-		return page;
+		return new Page();
+	}
+
+	public void deletePage(String uuid) throws PageNotFoundException {
+		Page page = getPageByUuid(uuid);
+		pages.remove(page);
+	}
+	
+	public SiteConfiguration getSiteConfiguration() {
+		SiteConfiguration config = new SiteConfiguration();
+		config.setTitle("My site");
+		config.setDescription("site molón");
+		config.setTheme("other");
+		return config;
 	}
 
 }

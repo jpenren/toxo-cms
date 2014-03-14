@@ -3,10 +3,12 @@ package es.toxo.cms.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.toxo.cms.exception.PageNotFoundException;
+import es.toxo.cms.model.SiteConfiguration;
 import es.toxo.cms.repository.DataRepository;
 
 @Controller
@@ -14,6 +16,11 @@ public class AppController {
 	
 	@Autowired
 	private DataRepository service;
+	
+	@ModelAttribute("config")
+	public SiteConfiguration getConfiguration(){
+		return service.getSiteConfiguration();
+	}
 	
 	@RequestMapping("/")
 	public String index(Model model){

@@ -1,4 +1,4 @@
-package es.toxo.cms.authentication;
+package es.toxo.cms.common.authentication;
 
 import java.util.Collection;
 

@@ -1,3 +1,20 @@
 body {
-  padding-top: 50px;
+	padding-top: 50px;
+}
+i{
+	font-size: 14px;
+}
+.nav-tabs {
+	margin-bottom: 15px;
+}
+.edit-page .tab-pane{
+	min-height: 350px;
+}
+.note-editor textarea.note-codable{
+	background-color:#fff;
+	color:#000;
+}
+textarea.page-custom-style{
+	width: 100%;
+	min-height: 300px;
 }

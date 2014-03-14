@@ -15,25 +15,24 @@
     	<input type="hidden" name="uuid" th:field="*{uuid}" />
     	<div class="modal-body">
 			<div class="form-group">
-		  		<label for="title" class="col-sm-4 control-label">Title</label>
-		  		<div class="col-sm-8">
+		  		<label for="title" class="col-sm-3 control-label">Title</label>
+		  		<div class="col-sm-9">
 		    		<input type="text" class="form-control" placeholder="The page title" required="required" th:field="*{title}" />
 		  		</div>
 			</div>
 			<div class="form-group">
-			  <label for="url" class="col-sm-4 control-label">Friendly URL</label>
-			  <div class="col-sm-8">
+			  <label for="url" class="col-sm-3 control-label">Friendly URL</label>
+			  <div class="col-sm-9">
 			    <input type="text" class="form-control" placeholder="my-page-friendly-url" th:field="*{friendlyUrl}" />
 			  </div>
 			</div>
 			<div class="form-groups">
-			  	<div class="checkbox col-sm-8 col-sm-offset-4">
+			  	<div class="checkbox col-sm-9 col-sm-offset-3">
 	   				<label>Hidden <input type="checkbox" id="hidden" th:field="*{hidden}" /></label>
 	 			</div>
 			</div>
     	</div>
     	<div class="modal-footer">
-    		<a href="#" class="btn btn-danger pull-left" th:if="${page.uuid!=null}">Delete</a>
       		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       		<button type="submit" class="btn btn-primary">Save changes</button>
     	</div>

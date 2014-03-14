@@ -9,6 +9,7 @@ public class Page implements Serializable{
 	private String friendlyUrl;
 	private String title;
 	private String content;
+	private String customStyle;
 	private int position;
 	private boolean hidden;
 	
@@ -35,6 +36,12 @@ public class Page implements Serializable{
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getCustomStyle() {
+		return customStyle;
+	}
+	public void setCustomStyle(String customStyle) {
+		this.customStyle = customStyle;
 	}
 	public int getPosition() {
 		return position;

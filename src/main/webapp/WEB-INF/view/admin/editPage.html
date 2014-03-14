@@ -9,49 +9,72 @@
 <div class="modal-content">
 	<div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel">Edit page</h4>
+      <h4 class="modal-title" id="myModalLabel">Edit page: <span th:text="${page.title}"></span></h4>
     </div>
     <form action="#" class="form-horizontal" role="form" th:action="@{/admin/pages/save}" th:object="${page}">
     	<input type="hidden" name="uuid" th:field="*{uuid}" />
     	<div class="modal-body">
-			<div class="form-group">
-		  		<label for="title" class="col-sm-4 control-label">Title</label>
-		  		<div class="col-sm-8">
+    	
+    	<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+		  <li class="active"><a href="#page-content" data-toggle="tab">Content</a></li>
+		  <li><a href="#page-style" data-toggle="tab">Style</a></li>
+		  <li><a href="#page-configuration" data-toggle="tab">Configuration</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content edit-page">
+		  <div class="tab-pane active" id="page-content">
+		  	<div class="row">
+			  <div class="col-sm-12">
+			  	<textarea class="summernote" th:field="*{content}"></textarea>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="tab-pane" id="page-style">
+		  	<div class="row">
+			  <div class="col-sm-12">
+			  	<textarea class="page-custom-style" th:field="*{customStyle}"></textarea>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="tab-pane" id="page-configuration">
+		  	<div class="form-group">
+		  		<label for="title" class="col-sm-2 control-label">Title</label>
+		  		<div class="col-sm-10">
 		    		<input type="text" class="form-control" placeholder="The page title" required="required" th:field="*{title}" />
 		  		</div>
 			</div>
 			<div class="form-group">
-			  <label for="url" class="col-sm-4 control-label">Friendly URL</label>
-			  <div class="col-sm-8">
+			  <label for="url" class="col-sm-2 control-label">Friendly URL</label>
+			  <div class="col-sm-10">
 			    <input type="text" class="form-control" placeholder="my-page-friendly-url" th:field="*{friendlyUrl}" />
 			  </div>
 			</div>
-			<div class="form-group">
-			  <label for="url" class="col-sm-4 control-label">Content</label>
-			  <div class="col-sm-8">
-			  	<textarea class="summernote" th:field="*{content}">summernote 1</textarea>
-<!-- 			    <input type="text" class="form-control" placeholder="my-page-friendly-url" th:field="*{friendlyUrl}" /> -->
-			  </div>
-			</div>
+			
 			<div class="form-groups">
-			  	<div class="checkbox col-sm-8 col-sm-offset-4">
+			  	<div class="checkbox col-sm-10 col-sm-offset-2">
 	   				<label>Hidden <input type="checkbox" id="hidden" th:field="*{hidden}" /></label>
 	 			</div>
 			</div>
+		  </div>
+		</div>
+			
     	</div>
     	<div class="modal-footer">
-    		<a href="#" class="btn btn-danger pull-left" th:if="${page.uuid!=null}">Delete</a>
-      		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    		<a href="#" class="btn btn-danger pull-left" th:if="${page.uuid!=null}" th:href="@{/admin/pages/delete/}+${page.uuid}">Delete</a>
+			<a href="" class="btn btn-default">Close</a>      		
       		<button type="submit" class="btn btn-primary">Save changes</button>
     	</div>
     </form>
 </div>
 
-<script type="text/javascript">
+	<script type="text/javascript">
     	<!--//
     		$(document).ready(function() {
     		  $('.summernote').summernote({height: 300});
-    		  $()
     		});
     	//-->
     </script>

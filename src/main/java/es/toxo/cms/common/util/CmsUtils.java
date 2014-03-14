@@ -1,4 +1,4 @@
-package es.toxo.cms.util;
+package es.toxo.cms.common.util;
 
 import java.net.URLEncoder;
 import java.util.Arrays;

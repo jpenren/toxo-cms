@@ -13,7 +13,7 @@
 	</http>
 	
 	<!-- Implementación de la validación de usuarios -->
-	<beans:bean id="authenticationProvider" class="es.toxo.cms.authentication.AuthenticationProvider" />
+	<beans:bean id="authenticationProvider" class="es.toxo.cms.common.authentication.AuthenticationProvider" />
 	<authentication-manager>
 		<authentication-provider ref="authenticationProvider" />
 	</authentication-manager>

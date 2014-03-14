@@ -7,10 +7,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import es.toxo.cms.common.util.CmsUtils;
 import es.toxo.cms.exception.PageNotFoundException;
 import es.toxo.cms.model.Page;
 import es.toxo.cms.repository.DataRepository;
-import es.toxo.cms.util.CmsUtils;
 
 @Controller
 public class AdminController {
@@ -47,6 +47,12 @@ public class AdminController {
 		repository.save(page);
 		
 		return CmsUtils.redirect(url);
+	}
+	
+	@RequestMapping("/admin/pages/delete/{uuid}")
+	public String deletePage(@PathVariable String uuid) throws PageNotFoundException{
+		repository.deletePage(uuid);
+		return CmsUtils.redirect("/");
 	}
 
 }
