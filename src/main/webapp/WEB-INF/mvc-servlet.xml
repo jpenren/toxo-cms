@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Dispatcher configuration for serving static resources -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	
+	<!-- Scans the classpath of this application for @Components to deploy as beans -->
+	<context:component-scan base-package="es.toxo.cms.controller" />
+
+	<!-- Configures the @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<!-- TemplateResolver <- TemplateEngine <- ViewResolver -->
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".html" />
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="templateMode" value="HTML5" />
+		<property name="cacheable" value="false" />
+	</bean>
+
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+		<property name="additionalDialects">
+			<set>
+				<bean class="org.thymeleaf.extras.conditionalcomments.dialect.ConditionalCommentsDialect" />
+			</set>
+		</property>
+	</bean>
+
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+	</bean>
+
+</beans>

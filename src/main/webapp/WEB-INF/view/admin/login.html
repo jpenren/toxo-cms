@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" th:href="@{/resources/images/favicon.ico}" />
+
+    <title>Acceso</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <!-- Icons -->
+	<link href="../../resources/css/font-awesome.min.css" th:href="@{/resources/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="../../resources/css/signin.css" rel="stylesheet" th:href="@{/resources/css/signin.css}"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="../../resources/js/html5shiv.js" th:src="@{/resources/js/html5shiv.js}"></script>
+      <script src="../../resources/js/respond.min.js" th:src="@{/resources/js/respond.min.js}"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+    	<h1 class="form-signin-heading"><i class="fa fa-th-large"></i> H2050</h1>
+      <form class="form-signin" role="form" action="j_spring_security_check" method="post">
+        <fieldset>
+        	<div class="input-group">
+        		<input type="text" name="j_username" class="form-control" placeholder="Usuario" required="required" autofocus="autofocus"/>
+			  	<span class="input-group-addon"><i class="fa fa-user fa-lg fa-fw"></i></span>
+			</div>
+			<div class="input-group">
+				<input type="password" name="j_password" class="form-control" placeholder="Contraseña" required="required"/>
+			  	<span class="input-group-addon"><i class="fa fa-lock fa-lg fa-fw"></i></span>
+			</div>
+        </fieldset>
+        
+        <div class="buttons-holder">
+        	<button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
+        </div>
+      </form>
+    </div> <!-- /container -->
+
+  </body>
+</html>
