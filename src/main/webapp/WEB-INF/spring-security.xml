@@ -9,7 +9,7 @@
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/admin/**" access="isAuthenticated()" />
 		<form-login login-page="/login" default-target-url="/" always-use-default-target="true" authentication-failure-url="/login?loginError" />
-		<logout logout-url="/doLogout" />
+		<logout logout-url="/logout" />
 	</http>
 	
 	<!-- Implementación de la validación de usuarios -->

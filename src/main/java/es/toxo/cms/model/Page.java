@@ -10,8 +10,10 @@ public class Page implements Serializable{
 	private String title;
 	private String content;
 	private String customStyle;
+	private String customJavascript;
 	private int position;
 	private boolean hidden;
+	private String parentPage;
 	
 	public String getUuid() {
 		return uuid;
@@ -43,6 +45,12 @@ public class Page implements Serializable{
 	public void setCustomStyle(String customStyle) {
 		this.customStyle = customStyle;
 	}
+	public String getCustomJavascript() {
+		return customJavascript;
+	}
+	public void setCustomJavascript(String customJavascript) {
+		this.customJavascript = customJavascript;
+	}
 	public int getPosition() {
 		return position;
 	}
@@ -54,5 +62,11 @@ public class Page implements Serializable{
 	}
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+	public String getParentPage() {
+		return parentPage;
+	}
+	public void setParentPage(String parentPage) {
+		this.parentPage = parentPage;
 	}
 }

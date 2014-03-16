@@ -7,7 +7,9 @@ public class SiteConfiguration implements Serializable{
 	private String siteTitle;
 	private String title;
 	private String description;
-	private String theme;
+	private String keywords;
+	private String customStyle;
+	private String customJavascript;
 	
 	public String getSiteTitle() {
 		return siteTitle;
@@ -27,10 +29,22 @@ public class SiteConfiguration implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getTheme() {
-		return theme;
+	public String getKeywords() {
+		return keywords;
 	}
-	public void setTheme(String theme) {
-		this.theme = theme;
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+	public String getCustomStyle() {
+		return customStyle;
+	}
+	public void setCustomStyle(String customStyle) {
+		this.customStyle = customStyle;
+	}
+	public String getCustomJavascript() {
+		return customJavascript;
+	}
+	public void setCustomJavascript(String customJavascript) {
+		this.customJavascript = customJavascript;
 	}
 }

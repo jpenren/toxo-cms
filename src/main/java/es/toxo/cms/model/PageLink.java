@@ -1,6 +1,7 @@
 package es.toxo.cms.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class PageLink implements Serializable{
 	
@@ -8,6 +9,7 @@ public class PageLink implements Serializable{
 	private String uuid;
 	private String friendlyUrl;
 	private String title;
+	private List<PageLink> subPages;
 	
 	public String getUuid() {
 		return uuid;
@@ -26,5 +28,11 @@ public class PageLink implements Serializable{
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public List<PageLink> getSubPages() {
+		return subPages;
+	}
+	public void setSubPages(List<PageLink> subPages) {
+		this.subPages = subPages;
 	}
 }

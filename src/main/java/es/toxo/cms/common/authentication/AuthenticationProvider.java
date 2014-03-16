@@ -13,7 +13,7 @@ public class AuthenticationProvider implements  org.springframework.security.aut
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 			
 		Collection<? extends GrantedAuthority> roles = AuthorityUtils.commaSeparatedStringToAuthorityList("admin");
-		return new UsernamePasswordAuthenticationToken("dummy", "dummy", roles);
+		return new UsernamePasswordAuthenticationToken("logued-user", "*", roles);
 	}
 
 	public boolean supports(Class<?> arg0) {

@@ -9,11 +9,20 @@
 <div class="modal-content">
 	<div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel">Edit page</h4>
+      <h4 class="modal-title" id="myModalLabel">Add new page</h4>
     </div>
     <form action="#" class="form-horizontal" role="form" th:action="@{/admin/pages/save}" th:object="${page}">
-    	<input type="hidden" name="uuid" th:field="*{uuid}" />
+    	<input type="hidden" name="content" th:field="*{content}" />
     	<div class="modal-body">
+    		<div class="form-group">
+		  		<label for="title" class="col-sm-3 control-label">Parent</label>
+		  		<div class="col-sm-9">
+		  			<select class="form-control" th:field="*{parentPage}">
+		  				<option value="">--------</option>
+		  				<option th:each="link : ${menuLinks}" th:text="${link.title}" th:value="${link.uuid}"></option>
+		  			</select>
+		  		</div>
+			</div>
 			<div class="form-group">
 		  		<label for="title" class="col-sm-3 control-label">Title</label>
 		  		<div class="col-sm-9">
@@ -26,10 +35,12 @@
 			    <input type="text" class="form-control" placeholder="my-page-friendly-url" th:field="*{friendlyUrl}" />
 			  </div>
 			</div>
-			<div class="form-groups">
-			  	<div class="checkbox col-sm-9 col-sm-offset-3">
-	   				<label>Hidden <input type="checkbox" id="hidden" th:field="*{hidden}" /></label>
-	 			</div>
+				
+			<div class="checkbox col-sm-offset-3">
+			  <label>
+			  	<input type="checkbox" id="hidden" th:field="*{hidden}" />
+			    Hidden
+			  </label>
 			</div>
     	</div>
     	<div class="modal-footer">

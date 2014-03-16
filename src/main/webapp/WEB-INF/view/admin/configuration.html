@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<title>Dashboard</title>
+</head>
+<body>
+
+<div class="modal-content">
+	<div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title" id="myModalLabel">Site configuration</h4>
+    </div>
+    <form action="#" class="form-horizontal" role="form" th:action="@{/admin/configuration/save}" th:object="${config}">
+    	<div class="modal-body">
+    	
+	    	<ul class="nav nav-tabs">
+			  <li class="active"><a href="#tab-general" data-toggle="tab">General</a></li>
+			  <li><a href="#tab-style" data-toggle="tab">Custom CSS</a></li>
+			  <li><a href="#tab-javascript" data-toggle="tab">Custom Javascript</a></li>
+			</ul>
+	
+			<!-- Tab panes -->
+			<div class="tab-content edit-page">
+			  <div class="tab-pane active" id="tab-general">
+			  	<div class="row">
+				  <div class="col-sm-12">
+				  	<div class="form-group">
+				  		<label for="title" class="col-sm-2 control-label">Site title</label>
+				  		<div class="col-sm-10">
+				    		<input type="text" class="form-control" placeholder="The page title" required="required" th:field="*{siteTitle}" />
+				  		</div>
+					</div>
+					<div class="form-group">
+				  		<label for="title" class="col-sm-2 control-label">Title</label>
+				  		<div class="col-sm-10">
+				    		<input type="text" class="form-control" placeholder="The page title" required="required" th:field="*{title}" />
+				  		</div>
+					</div>
+					<div class="form-group">
+				  		<label for="title" class="col-sm-2 control-label">Description</label>
+				  		<div class="col-sm-10">
+				    		<textarea class="form-control" placeholder="Meta description value" required="required" th:field="*{description}"></textarea>
+				  		</div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="tab-pane" id="tab-style">
+			  	<div class="row">
+				  <div class="col-sm-12">
+				  	<small>Add custom CSS to <strong>all</strong> pages</small>
+				  	<textarea class="page-property" placeholder="body{background-color:red;}" th:field="*{customStyle}"></textarea>
+				  </div>
+				</div>
+			  </div>
+			  
+			  <div class="tab-pane" id="tab-javascript">
+			  	<div class="row">
+				  <div class="col-sm-12">
+				  	<small>Add custom Javascript to <strong>all</strong> pages</small>
+				  	<textarea class="page-property" placeholder="alert('Hello');" th:field="*{customJavascript}"></textarea>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+    	
+			
+    	</div>
+    	<div class="modal-footer">
+      		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      		<button type="submit" class="btn btn-primary">Save changes</button>
+    	</div>
+    </form>
+</div>
+
+</body>
+</html>

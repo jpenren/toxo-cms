@@ -1,12 +1,15 @@
 package es.toxo.cms.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import es.toxo.cms.common.config.Configuration;
 import es.toxo.cms.exception.PageNotFoundException;
 import es.toxo.cms.model.Page;
 import es.toxo.cms.model.PageLink;
@@ -16,28 +19,37 @@ import es.toxo.cms.model.SiteConfiguration;
 public class DataRepository {
 
 	private List<Page> pages = new ArrayList<Page>();
-	
-	public DataRepository() {
-		Page page = new Page();
-		page.setUuid(UUID.randomUUID().toString());
-		page.setFriendlyUrl("");
-		page.setTitle("Home");
-		pages.add(page);
-	}
+	private SiteConfiguration config = createDefaultConfiguration();
 	
 	public List<PageLink> getMenuLinks() {
 		List<PageLink> links = new ArrayList<PageLink>(); 
+		Map<String, PageLink> linksMap = new HashMap<String, PageLink>();
 		for (Page page : pages) {
 			PageLink link = new PageLink();
 			link.setFriendlyUrl(page.getFriendlyUrl());
 			link.setTitle(page.getTitle());
 			link.setUuid(page.getUuid());
-			links.add(link);
+			if(StringUtils.isEmpty(page.getParentPage())){
+				links.add(link);
+				linksMap.put(page.getUuid(), link);
+			}else{
+				PageLink parentLink = linksMap.get(page.getParentPage());
+				if(parentLink!=null){
+					if(parentLink.getSubPages()==null){
+						parentLink.setSubPages(new ArrayList<PageLink>());
+					}
+					parentLink.getSubPages().add(link);
+				}
+			}
 		}
 		return links;
 	}
 
 	public Page getIndexPage() {
+		if(pages.isEmpty()){
+			pages.add(createDefaultIndexPage());
+		}
+		
 		return pages.get(0);
 	}
 
@@ -63,7 +75,7 @@ public class DataRepository {
 			}
 		}
 		
-		throw new PageNotFoundException();
+		throw new PageNotFoundException(String.format("Page %s not found", friendlyUrl));
 	}
 
 	public Page getPageByUuid(String uuid) throws PageNotFoundException {
@@ -73,11 +85,13 @@ public class DataRepository {
 			}
 		}
 		
-		throw new PageNotFoundException();
+		throw new PageNotFoundException(String.format("Page %s not found", uuid));
 	}
 
 	public Object createPage() {
-		return new Page();
+		Page page = new Page();
+		page.setContent(Configuration.get("empty.page.content"));
+		return page;
 	}
 
 	public void deletePage(String uuid) throws PageNotFoundException {
@@ -86,10 +100,29 @@ public class DataRepository {
 	}
 	
 	public SiteConfiguration getSiteConfiguration() {
+		return config;
+	}
+
+	public void save(SiteConfiguration configuration) {
+		this.config = configuration;
+	}
+	
+	private Page createDefaultIndexPage(){
+		Page page = new Page();
+		page.setUuid(UUID.randomUUID().toString());
+		page.setFriendlyUrl("");
+		page.setTitle("Home");
+		page.setContent(Configuration.get("empty.index.content"));
+		
+		return page;
+	}
+	
+	private SiteConfiguration createDefaultConfiguration(){
 		SiteConfiguration config = new SiteConfiguration();
+		config.setSiteTitle("My new site");
 		config.setTitle("My site");
-		config.setDescription("site molón");
-		config.setTheme("other");
+		config.setDescription("My site description");
+		
 		return config;
 	}
 
