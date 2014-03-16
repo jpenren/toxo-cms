@@ -46,7 +46,7 @@
         <div class="alert alert-danger" sec:authorize="!isAuthenticated()">
         	<p><strong>Message:</strong> <span th:text="${message}"></span></p>
         </div>
-      	<div class="alert alert-danger" sec:authorize="isAuthenticated()">
+      	<div class="alert alert-danger" >
       		<p><strong>Message:</strong> <span th:text="${exception.message}"></span></p>
       		<p><strong>StackTrace:</strong> <span th:text="${stackTrace}"></span></p>
       	</div>

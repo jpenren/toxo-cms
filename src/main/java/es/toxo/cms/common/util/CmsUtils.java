@@ -14,7 +14,7 @@ import es.toxo.cms.repository.DataRepository;
 public final class CmsUtils {
 	
 	private static final String ENCODING = "UTF-8";
-	private static final Collection<String> FORBIDDEN_CHARS=Arrays.asList(new String[]{"/","\\"});
+	private static final Collection<String> FORBIDDEN_CHARS=Arrays.asList(new String[]{"/","\\"," "});
 	private static final String REPLACEMENT_CHAR="-";
 	
 	private CmsUtils() {
