@@ -26,7 +26,7 @@ public class AppController {
 	}
 	
 	@RequestMapping("/")
-	public String index(Model model){
+	public String index(Model model) throws PageNotFoundException{
 		model.addAttribute("page", repository.getIndexPage());
 		model.addAttribute("menuLinks", repository.getMenuLinks());
 		return "index";
