@@ -32,6 +32,7 @@ public class DataRepository {
 	private static final String UPDATE_SITE_CONFIGURATION = "update site_configuration set customJavascript=?,customStyle=?,description=?,keywords=?,siteTitle=?,title=? where id=?";
 	private static final String INSERT_PAGE = "insert into page (content,customJavascript,customStyle,friendlyUrl,hidden,parentPage,position,title,uuid) values(?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_PAGE = "update page set content=?,customJavascript=?,customStyle=?,friendlyUrl=?,hidden=?,parentPage=?,position=?,title=? where uuid=?";
+	private static final String PAGE_FRIENDLY_URLS = "select uuid from page order by parentPage, position";
 	
 	@Autowired
 	private JdbcTemplate template;
@@ -46,7 +47,6 @@ public class DataRepository {
 	}
 	
 	public List<PageLink> getMenuLinks() {
-		
 		List<Page> pages = template.query(GET_PAGES, new BeanPropertyRowMapper<Page>(Page.class));
 		
 		List<PageLink> links = new ArrayList<PageLink>(); 
@@ -73,7 +73,11 @@ public class DataRepository {
 	}
 
 	public Page getIndexPage() throws PageNotFoundException {
-		return getPageByFriendlyUrl("");
+		List<String> urls = template.queryForList(PAGE_FRIENDLY_URLS, String.class);
+		if(urls.size()>0){
+			return getPageByUuid(urls.get(0));
+		}
+		throw new PageNotFoundException("Index page not found");
 	}
 
 	public void save(Page page) {

@@ -33,7 +33,7 @@ public class Initialization {
 
 	private Page createDefaultIndexPage(){
 		Page page = new Page();
-		page.setFriendlyUrl("");
+		page.setFriendlyUrl("home");
 		page.setTitle("Home");
 		page.setContent(Configuration.get("empty.index.content"));
 		

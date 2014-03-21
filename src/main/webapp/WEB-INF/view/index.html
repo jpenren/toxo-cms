@@ -53,17 +53,7 @@
           <a class="navbar-brand" href="#" th:utext="${config.title}" th:href="@{/}">Project name</a>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-          	<li th:each="link : ${menuLinks}" th:if="${link.subPages==null}" th:class="${link.uuid==page.uuid} ? 'active'">
-          		<a href="#" th:href="@{/}+${link.friendlyUrl}" th:text="${link.title}">Link</a>
-          	</li>
-          	<li class="dropdown" th:each="link : ${menuLinks}" th:if="${link.subPages}" th:class="${link.uuid==page.parentPage} ? 'active'">
-          		<a href="#" th:href="${link.subPages} ? '#' : @{/}+${link.friendlyUrl}" th:class="${link.subPages} ? dropdown-toggle" data-toggle="dropdown"><span th:text="${link.title}"></span> <b class="caret"></b></a>
-          		<ul class="dropdown-menu">
-          			<li th:each="subLink : ${link.subPages}"><a href="#" th:text="${subLink.title}" th:href="@{/}+${subLink.friendlyUrl}"></a></li>
-          		</ul>
-          	</li>
-          </ul>
+        	<ul class="nav navbar-nav" menu:generate="${menuLinks}">menu</ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
