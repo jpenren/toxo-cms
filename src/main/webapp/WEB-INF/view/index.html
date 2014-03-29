@@ -58,6 +58,7 @@
       </div>
     </div>
 
+	<div class="alert alert-danger fade in" th:if="${errorMsg!=null}" th:text="${errorMsg}"></div>
     <div class="container" th:utext="${page.content}"></div><!-- /.container -->
 
     <!-- Placed at the end of the document so the pages load faster -->

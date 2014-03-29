@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IContext;
 import org.thymeleaf.context.WebContext;
+import org.thymeleaf.exceptions.TemplateInputException;
 
 import es.toxo.cms.common.util.CmsUtils;
 import es.toxo.cms.exception.PageNotFoundException;
@@ -38,7 +39,11 @@ public class AppController {
 	@RequestMapping("/")
 	public String index(Model model, HttpServletRequest request, HttpServletResponse response) throws PageNotFoundException{
 		final Page page = repository.getIndexPage();
-		decorate(page, request, response);
+		try {
+			decorate(page, request, response);
+		} catch (TemplateInputException e) {
+			model.addAttribute("errorMsg", e.getMessage());
+		}
 		
 		model.addAttribute("page", page);
 		model.addAttribute("menuLinks", repository.getMenuLinks());
@@ -48,7 +53,11 @@ public class AppController {
 	@RequestMapping("/{friendlyUrl}")
 	public String page(Model model, @PathVariable String friendlyUrl, HttpServletRequest request, HttpServletResponse response) throws PageNotFoundException{
 		final Page page = repository.getPageByFriendlyUrl(friendlyUrl);
-		decorate(page, request, response);
+		try {
+			decorate(page, request, response);
+		} catch (TemplateInputException e) {
+			model.addAttribute("errorMsg", e.getMessage());
+		}
 		
 		model.addAttribute("page", page);
 		model.addAttribute("menuLinks", repository.getMenuLinks());

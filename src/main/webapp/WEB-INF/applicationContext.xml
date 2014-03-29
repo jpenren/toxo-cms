@@ -11,17 +11,10 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="es.toxo.cms.repository" />
-	
-	<bean id="org.h2.tools.Server" class="org.h2.tools.Server"
-		factory-method="createTcpServer" init-method="start" destroy-method="stop">
-		<constructor-arg value="-tcp,-tcpAllowOthers" />
-	</bean>
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.h2.Driver" />
-		<property name="url"
-			value="jdbc:h2:~/toxo-cms/database;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
+		<property name="url" value="jdbc:h2:~/toxo-cms/database;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
