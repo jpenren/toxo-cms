@@ -1,12 +1,9 @@
 package es.toxo.cms.repository;
 
-import java.io.File;
-import java.io.IOException;
-
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
@@ -18,16 +15,20 @@ import es.toxo.cms.model.SiteConfiguration;
 @Component
 public class Initialization {
 
+	private final Logger log = LoggerFactory.getLogger(Initialization.class);
 	@Autowired
 	private DataRepository repository;
 	
 	@PostConstruct
 	public void initialize(){
 		
+		log.info("Initializing database");
+		
 		try {
 			//Try to make some operation on database to determine if exists
 			repository.countPages();
 		} catch (BadSqlGrammarException e) {
+			log.info("Database not exists, will try to create the database");
 			repository.initialize();
 		}
 		
