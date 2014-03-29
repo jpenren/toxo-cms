@@ -38,5 +38,11 @@
 	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 	</bean>
+	
+	<!-- String based template engine -->
+	<bean id="stringTemplateResolver" class="es.toxo.cms.view.template.StringTemplateResolver" />
+	<bean id="stringTemplateEngine" class="org.thymeleaf.TemplateEngine">
+		<property name="templateResolver" ref="stringTemplateResolver"/>
+	</bean>
 
 </beans>

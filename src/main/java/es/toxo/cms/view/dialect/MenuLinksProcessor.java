@@ -50,7 +50,8 @@ public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrPr
         /*
          * Execute the expression just parsed
          */
-        final List<PageLink> links = (List<PageLink>) expression.execute(configuration, arguments);
+        @SuppressWarnings("unchecked")
+		final List<PageLink> links = (List<PageLink>) expression.execute(configuration, arguments);
         
         HttpServletRequest request = getContextPath(parser, configuration, arguments);
         StringBuilder builder = new StringBuilder();
@@ -68,7 +69,6 @@ public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrPr
 	private HttpServletRequest getContextPath(IStandardExpressionParser parser, Configuration configuration, Arguments arguments){
 		//Current request
         return (HttpServletRequest) parser.parseExpression(configuration, arguments, "${#httpServletRequest}").execute(configuration, arguments);
-//        return 
 	}
 	
 	private String generateLi(PageLink link, HttpServletRequest request){

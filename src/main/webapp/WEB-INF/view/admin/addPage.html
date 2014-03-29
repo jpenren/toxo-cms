@@ -11,7 +11,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title" id="myModalLabel">Add new page</h4>
     </div>
-    <form action="#" class="form-horizontal" role="form" th:action="@{/admin/pages/save}" th:object="${page}">
+    <form method="post" class="form-horizontal" role="form" th:action="@{/admin/pages/save}" th:object="${page}">
     	<input type="hidden" name="content" th:field="*{content}" />
     	<div class="modal-body">
     		<div class="form-group">
@@ -39,7 +39,7 @@
 			<div class="checkbox col-sm-offset-3">
 			  <label>
 			  	<input type="checkbox" id="hidden" th:field="*{hidden}" />
-			    Hidden
+			    Hidden <small>(Do not appears on menu, is accessible from the friendly url)</small>
 			  </label>
 			</div>
     	</div>

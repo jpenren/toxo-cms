@@ -11,7 +11,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title" id="myModalLabel">Edit page: <span th:text="${page.title}"></span></h4>
     </div>
-    <form action="#" class="form-horizontal" role="form" th:action="@{/admin/pages/save}" th:object="${page}">
+    <form method="post" class="form-horizontal" role="form" th:action="@{/admin/pages/save}" th:object="${page}">
     	<input type="hidden" name="uuid" th:field="*{uuid}" />
     	<div class="modal-body">
     	

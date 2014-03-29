@@ -1,8 +1,14 @@
 package es.toxo.cms.repository;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
 import es.toxo.cms.common.config.Configuration;
@@ -17,13 +23,22 @@ public class Initialization {
 	
 	@PostConstruct
 	public void initialize(){
-		//Create default index if not exists
-		int count =repository.countPages();
-		if(count==0){
+		
+		try {
+			//Try to make some operation on database to determine if exists
+			repository.countPages();
+		} catch (BadSqlGrammarException e) {
+			repository.initialize();
+		}
+		
+		//Creates default index if not exists
+		boolean existsIndexPage =repository.countPages()>0;
+		if(!existsIndexPage){
 			Page defaultIndex = createDefaultIndexPage();
 			repository.save(defaultIndex);
 		}
 		
+		//Creates default configuration if not exists
 		boolean existsConfig = repository.existsConfiguration();
 		if(!existsConfig){
 			SiteConfiguration defaultConfiguration = createDefaultConfiguration();

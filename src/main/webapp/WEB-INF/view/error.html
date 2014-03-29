@@ -42,11 +42,11 @@
 
       <div>
         <h1>Opps!</h1>
-        <p class="lead">An error occurred. Please return to the home page and try again</p>
+        <p class="lead">An error occurred. Please come back to the home page and try again</p>
         <div class="alert alert-danger" sec:authorize="!isAuthenticated()">
         	<p><strong>Message:</strong> <span th:text="${message}"></span></p>
         </div>
-      	<div class="alert alert-danger" >
+      	<div class="alert alert-danger" sec:authorize="isAuthenticated()">
       		<p><strong>Message:</strong> <span th:text="${exception.message}"></span></p>
       		<p><strong>StackTrace:</strong> <span th:text="${stackTrace}"></span></p>
       	</div>

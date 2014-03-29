@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +27,7 @@ public class DataRepository {
 	private static final String COUNT_CONFIGURATION = "select count(*) from site_configuration";
 	private static final String COUNT_PAGES = "select count(*) from page";
 	private static final String GET_CONFIGURATION = "select * from site_configuration where id=1";
-	private static final String GET_PAGES = "select * from page order by parentPage, position";
+	private static final String GET_PAGES = "select * from page where hidden=false order by parentPage, position";
 	private static final String PAGE_BY_UUID = "select * from page where uuid=?";
 	private static final String PAGE_BY_FRIENDLY_URL = "select * from page where friendlyUrl=?";
 	private static final String DELETE_BY_UUID = "delete from page where uuid=?";
@@ -33,10 +36,20 @@ public class DataRepository {
 	private static final String INSERT_PAGE = "insert into page (content,customJavascript,customStyle,friendlyUrl,hidden,parentPage,position,title,uuid) values(?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_PAGE = "update page set content=?,customJavascript=?,customStyle=?,friendlyUrl=?,hidden=?,parentPage=?,position=?,title=? where uuid=?";
 	private static final String PAGE_FRIENDLY_URLS = "select uuid from page order by parentPage, position";
+	private final Logger log = LoggerFactory.getLogger(DataRepository.class);
 	
 	@Autowired
 	private JdbcTemplate template;
 	private SiteConfiguration config;
+	
+	public void initialize() {
+		try {
+			final String sql = IOUtils.toString(Initialization.class.getResource("/database/scheme.sql"));
+			template.execute(sql);
+		} catch (Exception e) {
+			log.error("Error crating database: ", e);
+		}
+	}
 	
 	public int countPages(){
 		return template.queryForObject(COUNT_PAGES, Integer.class);
@@ -129,6 +142,8 @@ public class DataRepository {
 		}else{
 			update(configuration);
 		}
+		//force reload on next query
+		config=null;
 	}
 	
 	private void insert(Page page) {
