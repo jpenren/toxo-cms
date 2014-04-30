@@ -57,6 +57,7 @@ public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrPr
         StringBuilder builder = new StringBuilder();
         for (PageLink link : links) {
         	if(link.getSubPages()==null){
+        		//Main menu
         		builder.append(generateLi(link, request));
         	}else{
         		builder.append(generateLiSubmenu(link, request));
@@ -73,26 +74,28 @@ public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrPr
 	
 	private String generateLi(PageLink link, HttpServletRequest request){
 		String contextPath = new StringBuilder(request.getContextPath()).append("/").toString();
-		String currentPage = getCurrentPage(request);
-		String clas = currentPage.equals(link.getUuid()) ? "active" : "";
+		String rootPage = getCurrentPage(request).getUuid();
+		String clas = rootPage.equals(link.getUuid()) ? "active" : "";
 		String href = new StringBuilder(contextPath).append(link.getFriendlyUrl()).toString();
     	String title = link.getTitle();
     	
     	return String.format(LI, clas, href, title);
 	}
 	
-	private String getCurrentPage(HttpServletRequest request) {
-		Page page = (Page) request.getAttribute("page");
-		return page.getUuid()==null ? "" : page.getUuid();
+	private Page getCurrentPage(HttpServletRequest request) {
+		return (Page) request.getAttribute("page");
 	}
-
+	
 	private String generateLiSubmenu(PageLink link, HttpServletRequest request){
 		StringBuilder builder = new StringBuilder();
 		List<PageLink> links = link.getSubPages();
-		String currentPage = getCurrentPage(request);
+		String currentPage = getCurrentPage(request).getUuid();
 		boolean selected = false;
 		for (PageLink pageLink : links) {
-			builder.append(generateLi(pageLink, request));
+			//Add submenu links
+			if(!pageLink.isHidden()){
+				builder.append(generateLi(pageLink, request));
+			}
 			if(currentPage.equals(pageLink.getUuid())){
 				selected = true;
 			}

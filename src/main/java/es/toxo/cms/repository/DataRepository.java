@@ -27,7 +27,7 @@ public class DataRepository {
 	private static final String COUNT_CONFIGURATION = "select count(*) from site_configuration";
 	private static final String COUNT_PAGES = "select count(*) from page";
 	private static final String GET_CONFIGURATION = "select * from site_configuration where id=1";
-	private static final String GET_PAGES = "select * from page where hidden=false order by parentPage, position";
+	private static final String GET_PAGES = "select * from page order by parentPage, position";
 	private static final String PAGE_BY_UUID = "select * from page where uuid=?";
 	private static final String PAGE_BY_FRIENDLY_URL = "select * from page where friendlyUrl=?";
 	private static final String DELETE_BY_UUID = "delete from page where uuid=?";
@@ -69,10 +69,13 @@ public class DataRepository {
 			link.setFriendlyUrl(page.getFriendlyUrl());
 			link.setTitle(page.getTitle());
 			link.setUuid(page.getUuid());
+			link.setHidden(page.isHidden());
 			if(StringUtils.isEmpty(page.getParentPage())){
+				//Main menu links
 				links.add(link);
 				linksMap.put(page.getUuid(), link);
 			}else{
+				//Submenu links
 				PageLink parentLink = linksMap.get(page.getParentPage());
 				if(parentLink!=null){
 					if(parentLink.getSubPages()==null){
@@ -100,7 +103,7 @@ public class DataRepository {
 			update(page);
 		}
 	}
-
+	
 	public Page getPageByFriendlyUrl(String friendlyUrl) throws PageNotFoundException {
 		Page page = template.queryForObject(PAGE_BY_FRIENDLY_URL, new String[]{friendlyUrl}, new BeanPropertyRowMapper<Page>(Page.class));
 		if(page==null){
