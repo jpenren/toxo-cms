@@ -18,7 +18,7 @@ import es.toxo.cms.model.PageLink;
 public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrProcessor {
 
 	private static final String LI = "<li class=\"%s\"><a href=\"%s\">%s</a></li>";
-	private static final String LI_SUBMENU = "<li class=\"dropdown %s\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span>%s</span><b class=\"caret\"></b></a><ul class=\"dropdown-menu\">%s</ul></li>";
+	private static final String LI_SUBMENU = "<li class=\"dropdown %s\"><a href=\"%s\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span>%s</span><b class=\"caret\"></b></a><ul class=\"dropdown-menu\">%s</ul></li>";
 	
 	public MenuLinksProcessor() {
 		super("generate");
@@ -90,11 +90,13 @@ public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrPr
 		StringBuilder builder = new StringBuilder();
 		List<PageLink> links = link.getSubPages();
 		String currentPage = getCurrentPage(request).getUuid();
-		boolean selected = false;
+		boolean selected = link.getUuid().equals(currentPage);
+		boolean hasChildren = false;
 		for (PageLink pageLink : links) {
 			//Add submenu links
 			if(!pageLink.isHidden()){
 				builder.append(generateLi(pageLink, request));
+				hasChildren = true;
 			}
 			if(currentPage.equals(pageLink.getUuid())){
 				selected = true;
@@ -102,7 +104,11 @@ public class MenuLinksProcessor extends AbstractUnescapedTextChildModifierAttrPr
 		}
 		
 		String clas = selected ? "active" : "";
-		return String.format(LI_SUBMENU, clas, link.getTitle(), builder.toString());
+		if(hasChildren){
+			return String.format(LI_SUBMENU, clas, link.getFriendlyUrl(), link.getTitle(), builder.toString());
+		}else{
+			return String.format(LI, clas, link.getFriendlyUrl(), link.getTitle());
+		}
 	}
 
 }
