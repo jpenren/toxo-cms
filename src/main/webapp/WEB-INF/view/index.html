@@ -8,7 +8,7 @@
     <meta name="keywords" content="" th:content="${config.keywords}" />
 	<link rel="shortcut icon" href="../../resources/images/favicon.ico" th:href="@{/resources/images/favicon.ico}" />
 
-    <title th:text="${config.siteTitle}">Site title</title>
+    <title th:text="${page.title+' - '+config.siteTitle}">Site title</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}" />
